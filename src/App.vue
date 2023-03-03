@@ -230,13 +230,15 @@ export default {
 <!--            @change="filterStatus = $event"-->
 <!--          />-->
 
-        <StatusFilter
-          v-model="filterStatus"
-        />
+        <div class="todoapp__footer-wrapper">
+          <StatusFilter
+            v-model="filterStatus"
+          />
 
-        <button v-if="completedTodos.length > 0" @click="todos = todos.filter(todo => !todo.completed)" class="todoapp__clear-completed">
-          Clear completed
-        </button>
+          <button v-if="completedTodos.length > 0" @click="todos = todos.filter(todo => !todo.completed)" class="todoapp__clear-completed">
+            Clear completed
+          </button>
+        </div>
       </footer>
     </div>
 
