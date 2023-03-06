@@ -97,10 +97,10 @@ export default {
         class="todo__remove">x</button>
     </template>
 
-    <!--          <div class="modal overlay">-->
-    <!--            <div class="modal-background has-background-white-ter"></div>-->
-    <!--            <div class="loader"></div>-->
-    <!--          </div>-->
+<!--    <div class="modal overlay">-->
+<!--      <div class="modal-background has-background-white-ter"></div>-->
+<!--      <div class="loader"></div>-->
+<!--    </div>-->
 
   </div>
 </template>
