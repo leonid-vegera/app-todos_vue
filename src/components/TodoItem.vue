@@ -8,6 +8,7 @@ export default {
       completed: Boolean,
     },
     index: Number,
+    isLoading: Boolean,
   },
   emits: ['update', 'delete'],
   data() {
@@ -97,10 +98,10 @@ export default {
         class="todo__remove">x</button>
     </template>
 
-<!--    <div class="modal overlay">-->
-<!--      <div class="modal-background has-background-white-ter"></div>-->
-<!--      <div class="loader"></div>-->
-<!--    </div>-->
+    <div class="modal overlay" :class="{'is-active': isLoading}">
+      <div class="modal-background has-background-white-ter"></div>
+      <div class="loader"></div>
+    </div>
 
   </div>
 </template>
