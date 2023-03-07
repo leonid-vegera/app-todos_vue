@@ -1,35 +1,15 @@
-# app-todos_vue
+Implemented Todos Application according to [TODOS](https://todomvc.com/examples/vanillajs/) design and styles - Used Vue.js
 
-This template should help get you started developing with Vue 3 in Vite.
+Functionality:
+- Adding todos to the list
+- Deleting todos from the list
+- Mark todo as completed/active
+- Set all todos as completed/active
+- Delete all completed todos
+- Filter by All/Active/Completed todos
+- Edit todo after double-click
+- Saving data to API
 
-## Recommended IDE Setup
+Technologies used: Vue.js, TransitionGroups, axios, bulma
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+[DEMO Link of Application](https://leonid-vegera.github.io/app-todos_vue/)

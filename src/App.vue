@@ -12,6 +12,7 @@ export default {
       title: '',
       filterStatus: 'all',
       errorMessage: '',
+      isLoading: false,
     }
   },
   components: {
@@ -45,27 +46,39 @@ export default {
   },
   methods: {
     handleSubmit() {
+      this.isLoading = true;
       createTodo(this.title)
         .then(({data}) => {
             this.todos.push(data);
             this.title = '';
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
     updateTodo({id, title, completed}) {
+      this.isLoading = true;
       updateTodo({id, title, completed})
         .then(({ data }) => this.todos = this.todos.map(todo => {
           if (todo.id !== id) {
             return todo;
           }
           return data;
-        }));
+        }))
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     removeTodo(todoId) {
+      this.isLoading = true;
       deleteTodo(todoId)
         .then(() => {
           this.todos = this.todos.filter(todo => (
             todo.id !== todoId
           ))
+        })
+        .finally(() => {
+          this.isLoading = false;
         })
     },
     toggleAllTodos() {
@@ -110,6 +123,7 @@ export default {
           :index="index"
           @update="updateTodo"
           @delete="removeTodo(todo.id)"
+          :is-loading="isLoading"
         />
       </TransitionGroup>
 
@@ -130,7 +144,18 @@ export default {
       </footer>
     </div>
 
-    <ErrorMessage :text="errorMessage" class="is-warning"/>
+    <ErrorMessage
+      class="is-danger"
+      :active="errorMessage !== ''"
+      @closeError="errorMessage = ''">
+      <template #default>
+        {{errorMessage}}
+      </template>
+
+      <template #header-text>
+        <p>Error</p>
+      </template>
+    </ErrorMessage>
   </div>
 </template>
 

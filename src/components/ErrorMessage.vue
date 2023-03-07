@@ -2,23 +2,29 @@
 export default {
   name: "ErrorMessage",
   props: {
-    text: String,
+    active: Boolean,
   },
+  emits: ['closeError'],
+  methods: {
+    hide() {
+      this.$emit('closeError')
+    }
+  }
 };
 </script>
 
 <template>
   <article
     class="message"
-    :class="{ 'message--hidden': !text}"
+    :class="{ 'message--hidden': !active}"
   >
     <div class="message-header">
-      <p>Error</p>
-      <button class="delete"></button>
+      <slot name="header-text"></slot>
+      <button class="delete" @click="hide"></button>
     </div>
 
     <div class="message-body">
-      {{ text }}
+      <slot></slot>
     </div>
   </article>
 </template>

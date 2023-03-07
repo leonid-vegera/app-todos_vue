@@ -4,7 +4,7 @@ const userId = 6517;
 
 export const getTodos = () => {
   return client.get(`/todos?userId=${userId}`)
-    // .then(() => Promise.reject())
+    // .then(() => Promise.reject())   //Generate an error
 }
 
 export const createTodo = (title) => {
