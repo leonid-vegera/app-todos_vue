@@ -2,10 +2,8 @@
 export default {
   name: "StatusFilter",
   props: {
-    // status: String,
     modelValue: String,
   },
-  // emits: ['change'],
   emits: ['update:modelValue'],
 };
 </script>
@@ -41,7 +39,29 @@ export default {
   </nav>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+.filter {
+  display: flex;
+
+&__link {
+   margin: 3px;
+   padding: 3px 7px;
+
+   color: inherit;
+   text-decoration: none;
+
+   border: 1px solid transparent;
+   border-radius: 3px;
+
+&:hover {
+   border-color: rgba(175, 47, 47, 0.1);
+ }
+
+&.selected {
+   border-color: rgba(175, 47, 47, 0.2);
+ }
+}
+}
 
 </style>
 
