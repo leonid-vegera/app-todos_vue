@@ -1,7 +1,7 @@
 <script>
 import StatusFilter from '@/components/StatusFilter.vue';
 import TodoItem from "@/components/TodoItem.vue";
-import { createTodo, deleteTodo, getTodos, updateTodo } from "@/api/todos";
+import { createNewTodo, deleteTodo, getTodos, updateTodo } from "@/api/todos";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 
 export default {
@@ -36,50 +36,67 @@ export default {
     }
   },
   mounted() {
-    getTodos()
-      .then(({data}) => {
-        this.todos = data;
-      })
-      .catch(() => {
-      this.errorMessage = 'Something went wrong'
-      })
+    this.getAllTodos();
+    // getAllTodos()
+    //   .then(({data}) => {
+    //     this.todos = data;
+    //   })
+    //   .catch(() => {
+    //   this.errorMessage = 'Something went wrong'
+    //   })
+    // getTodos()
+    //   .then(({data}) => {
+    //     this.todos = data;
+    //   })
+    //   .catch(() => {
+    //   this.errorMessage = 'Something went wrong'
+    //   })
   },
   methods: {
-    handleSubmit() {
-      this.isLoading = true;
-      createTodo(this.title)
+    getAllTodos() {
+      getTodos()
         .then(({data}) => {
-            this.todos.push(data);
-            this.title = '';
+          this.todos = data;
         })
+        .catch(() => {
+          this.errorMessage = 'Something went wrong'
+        })
+    },
+    async handleSubmit() {
+      this.isLoading = true;
+      await createNewTodo(this.title)
+        // .then(({data}) => {
+        //   console.log('data', data);
+        //     this.todos.push(data);
+        //     this.title = '';
+        // })
         .finally(() => {
+          this.title = '';
           this.isLoading = false;
         });
+      await this.getAllTodos();
     },
     updateTodo({id, title, completed}) {
       this.isLoading = true;
       updateTodo({id, title, completed})
-        .then(({ data }) => this.todos = this.todos.map(todo => {
-          if (todo.id !== id) {
-            return todo;
-          }
-          return data;
-        }))
+        .then(this.getAllTodos)
+        // .then(({ data }) => this.todos = this.todos.map(todo => {
+        //   if (todo.id !== id) {
+        //     return todo;
+        //   }
+        //   return data;
+        // }))
         .finally(() => {
           this.isLoading = false;
         });
     },
-    removeTodo(todoId) {
+    async removeTodo(todoId) {
       this.isLoading = true;
-      deleteTodo(todoId)
-        .then(() => {
-          this.todos = this.todos.filter(todo => (
-            todo.id !== todoId
-          ))
-        })
+      await deleteTodo(todoId)
         .finally(() => {
           this.isLoading = false;
         })
+      await this.getAllTodos();
     },
     toggleAllTodos() {
       this.todos.forEach(({id, title, completed}) => {
