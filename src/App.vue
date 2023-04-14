@@ -1,7 +1,7 @@
 <script>
 import StatusFilter from '@/components/StatusFilter.vue';
 import TodoItem from "@/components/TodoItem.vue";
-import { createNewTodo, deleteTodo, getTodos, updateTodo } from "@/api/todos";
+import { createNewTodo, deleteTodo, getTodos, removeAll, updateAll, updateTodo } from "@/api/todos";
 import ErrorMessage from "@/components/ErrorMessage.vue";
 
 export default {
@@ -13,6 +13,7 @@ export default {
       filterStatus: 'all',
       errorMessage: '',
       isLoading: false,
+      completedFlag: false,
     }
   },
   components: {
@@ -37,13 +38,6 @@ export default {
   },
   mounted() {
     this.getAllTodos();
-    // getAllTodos()
-    //   .then(({data}) => {
-    //     this.todos = data;
-    //   })
-    //   .catch(() => {
-    //   this.errorMessage = 'Something went wrong'
-    //   })
     // getTodos()
     //   .then(({data}) => {
     //     this.todos = data;
@@ -99,12 +93,27 @@ export default {
       await this.getAllTodos();
     },
     toggleAllTodos() {
-      this.todos.forEach(({id, title, completed}) => {
-        return updateTodo({id, title, completed})
-          .then(() => this.todos = this.todos.map(todo => {
-            return {...todo, completed: !completed}
-          }))
-      })
+      updateAll(this.todos
+        .filter(todo => todo.completed === this.completedFlag)
+        .map((todo) => ({...todo, completed: !this.completedFlag})))
+      // Promise.all(this.todos
+      //   .filter(todo => todo.completed === this.completedFlag)
+      //   .map((todo) => {
+      //     return this.updateTodo({...todo, completed: !this.completedFlag})
+      //   }))
+        .then(this.getAllTodos)
+      this.completedFlag = !this.completedFlag;
+    },
+    clearCompleted() {
+      removeAll(this.todos
+        .filter(todo => todo.completed)
+        .map(todo => todo.id))
+      // Promise.all(
+      //   this.todos
+      //     .filter(todo => todo.completed)
+      //     .map(todo => this.removeTodo(todo.id))
+      // )
+        .then(this.getAllTodos)
     }
   },
 }
@@ -154,7 +163,7 @@ export default {
             v-model="filterStatus"
           ></status-filter>
 
-          <button v-if="completedTodos.length > 0" @click="todos = todos.filter(todo => !todo.completed)" class="todoapp__clear-completed">
+          <button v-if="completedTodos.length > 0" @click="clearCompleted" class="todoapp__clear-completed">
             Clear completed
           </button>
         </div>

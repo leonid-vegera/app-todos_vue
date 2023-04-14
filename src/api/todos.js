@@ -25,6 +25,14 @@ export const updateTodo = ({ id, title, completed }) => {
   })
 }
 
+export const updateAll = (todos) => {
+  return axios.patch(`/todos?action=update`, {items: todos})
+}
+
+export const removeAll = (ids) => {
+  return axios.patch(`/todos?action=delete`, { ids })
+}
+
 // const userId = 6517;
 
 // export const getTodos = () => {
