@@ -38,13 +38,6 @@ export default {
   },
   mounted() {
     this.getAllTodos();
-    // getTodos()
-    //   .then(({data}) => {
-    //     this.todos = data;
-    //   })
-    //   .catch(() => {
-    //   this.errorMessage = 'Something went wrong'
-    //   })
   },
   methods: {
     getAllTodos() {
@@ -59,11 +52,6 @@ export default {
     async handleSubmit() {
       this.isLoading = true;
       await createNewTodo(this.title)
-        // .then(({data}) => {
-        //   console.log('data', data);
-        //     this.todos.push(data);
-        //     this.title = '';
-        // })
         .finally(() => {
           this.title = '';
           this.isLoading = false;
@@ -74,12 +62,6 @@ export default {
       this.isLoading = true;
       updateTodo({id, title, completed})
         .then(this.getAllTodos)
-        // .then(({ data }) => this.todos = this.todos.map(todo => {
-        //   if (todo.id !== id) {
-        //     return todo;
-        //   }
-        //   return data;
-        // }))
         .finally(() => {
           this.isLoading = false;
         });
@@ -96,11 +78,6 @@ export default {
       updateAll(this.todos
         .filter(todo => todo.completed === this.completedFlag)
         .map((todo) => ({...todo, completed: !this.completedFlag})))
-      // Promise.all(this.todos
-      //   .filter(todo => todo.completed === this.completedFlag)
-      //   .map((todo) => {
-      //     return this.updateTodo({...todo, completed: !this.completedFlag})
-      //   }))
         .then(this.getAllTodos)
       this.completedFlag = !this.completedFlag;
     },
@@ -108,11 +85,6 @@ export default {
       removeAll(this.todos
         .filter(todo => todo.completed)
         .map(todo => todo.id))
-      // Promise.all(
-      //   this.todos
-      //     .filter(todo => todo.completed)
-      //     .map(todo => this.removeTodo(todo.id))
-      // )
         .then(this.getAllTodos)
     }
   },
